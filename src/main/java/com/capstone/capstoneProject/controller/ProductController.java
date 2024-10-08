@@ -16,6 +16,6 @@ public class ProductController {
 
     @GetMapping("/prod")
     public void product() throws IOException {
-        jsoupService.getProducts("https://prod.danawa.com/list/?cate=10224476");
+        jsoupService.getProducts("https://prod.danawa.com/list/?cate=11254120&15main_11_02");
     }
 }

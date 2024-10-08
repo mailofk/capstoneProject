@@ -14,10 +14,14 @@ public class ProductService {
     private final ProductRepository productRepository;
 
 
-    public void saveProduct(String prodName, String prodLink, String smlCategory) throws IOException {
+    public void saveProduct(String prodName, String prodLink, String smlCategory, String cpu, String ram, String capacity, String weight) throws IOException {
         Product product = new Product();
         product.setProductName(prodName);
         product.setLink(prodLink);
+        product.setCpu(cpu);
+        product.setRam(ram);
+        product.setCapacity(capacity);
+        product.setWeight(weight);
 
         product.setSmlCategory(smlCategory);
 

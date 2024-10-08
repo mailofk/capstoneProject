@@ -30,7 +30,7 @@ public class JsoupService {
     //분류마다 태그 클래스 이름이 다르므로, 각각 다르게 설정해 줘야함
     public void useSelenium() throws IOException {
 
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\mailo\\Desktop\\capstoneProject\\capstone\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\mailo\\Desktop\\capstoneProject\\capstoneProject\\chromedriver.exe");
 
         // WebDriver 객체 생성 (Chrome 브라우저 실행)
         WebDriver driver = new ChromeDriver();
@@ -98,7 +98,7 @@ public class JsoupService {
                     String prodLink = name.attr("href");
 
 
-                    productService.saveProduct(prodName, prodLink, title); // 추후 title -> category 수정
+//                    productService.saveProduct(prodName, prodLink, title); // 추후 title -> category 수정
                 }
             }
         }
@@ -115,7 +115,7 @@ public class JsoupService {
         Element titleTag = doc.selectFirst("title");
         String title = titleTag.text().split(" ")[0];
 
-        Category category = categoryService.findOneCategory(title);
+//        Category category = categoryService.findOneCategory(title);
 
         Elements mainProduct = doc.select("div.main_prodlist ul.product_list li.prod_item");
 
@@ -124,17 +124,44 @@ public class JsoupService {
             String prodName = name.text();
             String prodLink = name.attr("href");
 
-//            Element spec = element.selectFirst("div.spec_list");
-//            String prodSpec = spec.text();
+            Element spec = element.selectFirst("div.spec_list");
 
-            productService.saveProduct(prodName, prodLink, title); // 추후 title -> category 수정
+            //cpu 가져오기
+            Element cpuLabel = spec.selectFirst("span.cm_mark:contains(CPU)");
+            String cpu = cpuLabel.nextElementSibling().text();
+            if (cpu.contains("/")) {
+                cpu = cpuLabel.nextSibling().toString().trim();
+            }
+
+            //ram 가져오기
+            Element ramLabel = spec.selectFirst("span.cm_mark:contains(램)");
+            String ram = ramLabel.nextElementSibling().text().trim();
+            if (ram.contains("/")) {
+                ram = ramLabel.nextSibling().toString().trim();
+            } else if (ram.contains("램 용량")) { //애플 제품 RAM 없는 경우를 생각
+                ram = "APPLE RAM";
+            }
+
+
+            Element capacityLabel = spec.selectFirst("span.cm_mark:contains(저장장치)");
+            String capacity = capacityLabel.nextElementSibling().nextElementSibling().nextElementSibling().text();
+
+            Element weightLabel = spec.selectFirst("a:contains(무게)");
+            String weight = weightLabel.nextElementSibling().text();
+
+
+//            System.out.println(cpu + ", " + ram + ", " + capacity + ", " + weight);
+
+
+
+            productService.saveProduct(prodName, prodLink, title, cpu, ram, capacity, weight); // 추후 title -> category 수정
         }
 
     }
 
     public void testing() {
 
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\mailo\\Desktop\\capstoneProject\\capstone\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\mailo\\Desktop\\capstoneProject\\capstoneProject\\chromedriver.exe");
 
         // WebDriver 객체 생성 (Chrome 브라우저 실행)
         WebDriver driver = new ChromeDriver();
