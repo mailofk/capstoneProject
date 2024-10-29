@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -26,6 +29,14 @@ public class Product {
     private String ram;
     private String capacity;
     private String weight;
+
+    @OneToMany(mappedBy = "product")
+    private List<Comment> commentList = new ArrayList<Comment>();
+
+    public void addComment(Comment comment) {
+        commentList.add(comment);
+        comment.setProduct(this);
+    }
 
 
 }
