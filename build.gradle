@@ -34,6 +34,10 @@ dependencies {
 	implementation 'org.jsoup:jsoup:1.11.3'
 	implementation 'org.seleniumhq.selenium:selenium-java:4.6.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
 }
