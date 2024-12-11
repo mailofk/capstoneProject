@@ -7,10 +7,8 @@ import com.capstone.capstoneProject.dto.OneProductForm;
 import com.capstone.capstoneProject.service.JsoupService;
 import com.capstone.capstoneProject.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,12 +22,31 @@ public class ProductController {
 
     @GetMapping("/prod")
     public void product() throws IOException {
-        jsoupService.getProducts("https://prod.danawa.com/list/?cate=112758");
+//        jsoupService.getProducts("https://prod.danawa.com/list/?cate=112758");
+//        jsoupService.getProducts("https://prod.danawa.com/list/?cate=11353669");
+         jsoupService.getProducts("https://prod.danawa.com/list/?cate=11452813");
     }
 
+
+
     //연결이 제대로 되는지 테스트용
-    @PostMapping("/one/prod")
+    @GetMapping("/one/prod")
     public List<CommentForm> getComment(@RequestBody OneProductForm oneProductForm) {
         return productService.showOneProductComment(oneProductForm.getProductName());
     }
+
+    @GetMapping("/prod/test")
+    public Product prodTest(@RequestBody OneProductForm oneProductForm) {
+        return productService.getOneProduct(oneProductForm.getProductName());
+    }
+
+    @GetMapping("/prod/test/{productName}")
+    public Product prodTest(@PathVariable String productName) {
+        return productService.getOneProduct(productName);
+    }
+
+//    @PostMapping("/prod/image")
+//    public void setImage(@RequestPart MultipartFile file, String productName) throws IOException {
+//        productService.saveImage(productName, file);
+//    }
 }

@@ -30,6 +30,7 @@ public class Product {
     private String capacity;
     private String weight;
 
+
     @OneToMany(mappedBy = "product")
     private List<Comment> commentList = new ArrayList<Comment>();
 

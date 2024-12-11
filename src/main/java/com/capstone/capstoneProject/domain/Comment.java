@@ -20,6 +20,9 @@ public class Comment {
     private String productName;
     private String productComment;
 
+    @Lob
+    private byte[] image;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
