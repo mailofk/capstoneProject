@@ -3,6 +3,8 @@ package com.capstone.capstoneProject.service;
 import com.capstone.capstoneProject.domain.Comment;
 import com.capstone.capstoneProject.domain.Product;
 import com.capstone.capstoneProject.dto.CommentForm;
+import com.capstone.capstoneProject.dto.CommentReturnForm;
+import com.capstone.capstoneProject.repository.CommentRepository;
 import com.capstone.capstoneProject.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CommentRepository commentRepository;
 
 
     public void saveProduct(String prodName, String prodLink, String smlCategory, String cpu, String ram, String capacity, String weight) throws IOException {
@@ -73,6 +76,23 @@ public class ProductService {
     public Product getOneProductById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow();
+    }
+
+    public List<CommentReturnForm> getComments(Product product) {
+        List<Comment> allComment = commentRepository.findAllByProductName(product.getProductName());
+        List<CommentReturnForm> list = new ArrayList<>();
+        for (Comment comment : allComment) {
+            CommentReturnForm form = new CommentReturnForm();
+            form.setYoutuberName(comment.getYoutuberName());
+            form.setProductComment(comment.getProductComment());
+            form.setProductName(comment.getProductName());
+            form.setSubscriber(comment.getSubscriber());
+
+            list.add(form);
+        }
+
+        return list;
+
     }
 
 

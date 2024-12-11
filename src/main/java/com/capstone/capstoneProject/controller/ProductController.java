@@ -3,6 +3,7 @@ package com.capstone.capstoneProject.controller;
 import com.capstone.capstoneProject.domain.Comment;
 import com.capstone.capstoneProject.domain.Product;
 import com.capstone.capstoneProject.dto.CommentForm;
+import com.capstone.capstoneProject.dto.CommentReturnForm;
 import com.capstone.capstoneProject.dto.OneProductForm;
 import com.capstone.capstoneProject.service.JsoupService;
 import com.capstone.capstoneProject.service.ProductService;
@@ -43,6 +44,11 @@ public class ProductController {
     @GetMapping("/prod/test/{productName}")
     public Product prodTest(@PathVariable String productName) {
         return productService.getOneProduct(productName);
+    }
+
+    @GetMapping("/prod/comments") //product로 받는 것이 아닌 이름으로 받는 형태로?
+    public List<CommentReturnForm> getCommentsByProduct(Product product) {
+        return productService.getComments(product);
     }
 
 //    @PostMapping("/prod/image")
